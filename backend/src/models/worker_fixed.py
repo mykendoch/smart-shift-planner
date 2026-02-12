@@ -1,3 +1,4 @@
+
 """
 Worker Database Model
 
@@ -35,6 +36,10 @@ class Worker(Base):
     """
     __tablename__ = "workers"
 
+    # ========================================================================
+    # DATABASE COLUMNS
+    # ========================================================================
+    
     # PRIMARY KEY - Uniquely identifies each worker in database
     # Integer: Whole number (1, 2, 3, ...)
     # primary_key=True: This column uniquely identifies each row
@@ -63,10 +68,12 @@ class Worker(Base):
     # Used to track: When worker joined system, record age
     created_at = Column(DateTime, server_default=func.now())
 
+    # ========================================================================
+    # RELATIONSHIPS - Link to other tables
+    # ========================================================================
+    
     # One-to-Many: One Worker has many Shifts
     # relationship("Shift"): Link to Shift model class
     # back_populates="worker": Bidirectional - Shift.worker links back to Worker
     # Allows accessing all shifts: worker.shifts -> [shift1, shift2, shift3...]
     shifts = relationship("Shift", back_populates="worker")
-
-

@@ -6,8 +6,7 @@ This module contains machine learning models for:
 - Forecasting demand patterns
 - Recommending optimal shift times and locations
 
-================================= WHY PURE PYTHON? =================================
-
+WHY PURE PYTHON?
 DESIGN DECISION: Implemented ML without pandas/numpy/scikit-learn libraries
 
 BENEFITS OF THIS APPROACH:
@@ -15,7 +14,7 @@ BENEFITS OF THIS APPROACH:
    - No heavy dependencies (pandas/numpy have 100+ MB footprint combined)
    - Faster pip install (5 seconds vs 30+ seconds)
    - Smaller Docker image size
-   
+
 2. Educational Value
    - Clear understanding of how predictions work
    - Can see algorithm logic directly in code
@@ -26,7 +25,7 @@ BENEFITS OF THIS APPROACH:
    - Meets requirements for student project scope
    - Handles typical gig worker shift data well
    - No need for advanced statistical functions yet
-   
+
 4. Scalable Architecture
    - Can add pandas/numpy later without major refactoring
    - Pure Python code serves as model specification
@@ -38,80 +37,10 @@ TRADE-OFFS (When to upgrade):
 - STATISTICS: Manual calculations vs pandas aggregation functions
 
 MIGRATION PATH:
-1. Small dataset (current): Pure Python ✓ (NOW)
+1. Small dataset (current): Pure Python (NOW)
 2. Medium dataset (10k+ shifts): Upgrade to NumPy arrays for speed
 3. Large dataset (100k+ shifts): Add Pandas for data loading/grouping
 4. Advanced models needed: Use scikit-learn for RandomForest, SVM, etc.
-
-ALGORITHM APPROACH (Current Implementation):
-
-1. EarningsPredictor (Statistical Model)
-   - Uses lookup tables (dictionaries) for time/day/location multipliers
-   - Formula: earnings = base_rate × time_mult × day_mult × demand_mult
-   - Data: Static patterns (could be trained on historical data)
-   
-2. DemandForecaster (Pattern Matching)
-   - Pre-defined demand patterns by location and time period
-   - Stores patterns in nested dictionaries
-   - Returns scalar 0-1 demand level
-   
-3. ShiftOptimizer (Recommendation Engine)
-   - Loops through possible shift times (0-23 hours)
-   - Calculates earnings for each using EarningsPredictor
-   - Returns top N recommendations sorted by earnings
-
-POTENTIAL IMPROVEMENTS (Future):
-- Train lookup tables on real historical data (no library needed)
-- Implement linear regression to discover relationships
-- Add time-series analysis for trend detection
-- Use clustering for demand pattern discovery
-- Integrate scikit-learn for RandomForest earnings prediction
-- Add Plotly/Matplotlib for visualization dashboards
-
-COMPARISON: Pure Python vs ML Libraries
-
-For Current Use Case (predicting earnings, ~100 shifts/hour):
-
-                Pure Python (Now)    Pandas/NumPy        Scikit-Learn
-Install Size:   Minimal (~1KB code)  200+ MB             300+ MB
-Speed:          2-5ms/prediction     <1ms               <1ms
-Setup Effort:   Immediate            15min setup        30min setup
-Complexity:     Simple logic         Medium data ops    Complex models
-Accuracy:       Good (~80%)          Good (~80%)        Excellent (~95%)
-Flexibility:    Manual coding        Flexible ops       Pre-built models
-
-CURRENT IMPLEMENTATION WORKS BEST FOR:
-✓ Student projects (educational, small-scale)
-✓ MVP products (proving concept)
-✓ Real-time predictions (simple, fast)
-✓ Deployment-constrained environments
-✓ When interpretability matters more than accuracy
-
-ADD LIBRARIES WHEN YOU NEED:
-✗ Training on 100k+ historical records
-✗ Complex statistical models (clustering, NLP)
-✗ Cross-validation and parameter tuning
-✗ Sub-second performance on terabytes of data
-✗ Advanced visualization dashboards
-
-EXAMPLE: If we had real data
-
-Current approach (Pure Python):
-    for i in range(1000):
-        earnings = predict(hour, day, location, demand)
-    Time: ~10ms
-
-With Pandas/NumPy:
-    df['prediction'] = df.apply(lambda x: predict(x['hour'], x['day'], ...), axis=1)
-    Time: ~1ms (10x faster)
-
-With Scikit-Learn:
-    model = RandomForestRegressor()
-    model.fit(train_X, train_y)
-    predictions = model.predict(test_X)
-    Time: <1ms with 95%+ accuracy
-    
-========================================================================================
 """
 import logging
 from datetime import datetime
@@ -162,7 +91,7 @@ class EarningsPredictor:
             demand_level=0.8
         )
         # Returns ~$25.76 (18 * 1.4 * 1.1 * 1.36)
-    \"\"\"
+    """
     
     # Base hourly earnings by location (can be trained on real data)
     BASE_EARNINGS = {
@@ -209,7 +138,7 @@ class EarningsPredictor:
         # Get base earnings for location
         base = self.BASE_EARNINGS.get(location, self.BASE_EARNINGS["default"])
         
-        #Time multiplier
+        # Time multiplier
         time_mult = self._get_time_multiplier(hour)
         
         # Day multiplier
@@ -277,7 +206,7 @@ class DemandForecaster:
     
     ALTERNATIVES (if using ML libraries):
         Statsmodels: ARIMA/SARIMAX for time-series forecasting
-        Prophet: Facebook's time-series lib for seasonality detection
+        Prophet: Facebook time-series lib for seasonality detection
         scikit-learn: RandomForest or SVR for pattern prediction
     
     ADVANTAGES OF CURRENT APPROACH:
@@ -298,7 +227,7 @@ class DemandForecaster:
     - Want automatic pattern discovery from historical data
     - Need confidence/uncertainty intervals on forecasts
     - Platform announces major changes requiring retraining
-    \"\"\"
+    """
     
     # Simplified demand patterns (0-1 scale)
     DEMAND_PATTERNS = {
