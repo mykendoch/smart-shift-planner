@@ -1,3 +1,17 @@
+"""
+Business Logic for Shift Operations
+
+This module contains core business logic functions for:
+- Creating and persisting shift records to database
+- Retrieving shifts with pagination
+- Computing income guarantee top-ups
+
+Separates business logic from API endpoint code for better organization.
+Services are called by endpoint functions in api/v1/endpoints/shifts.py
+
+Design pattern:
+    API Endpoint → Service Function → SQLAlchemy ORM → PostgreSQL Database
+"""
 from typing import List, Optional
 from sqlalchemy.orm import Session
 from datetime import datetime

@@ -1,29 +1,132 @@
+# ==============================================================================
 # Smart Shift Planner Backend - Python Dependencies
-# Web framework and API
+# ==============================================================================
+
+# ==============================================================================
+# WEB FRAMEWORK - Core packages for building REST API
+# ==============================================================================
+
 fastapi==0.115.0
+# FastAPI: Modern Python web framework for building APIs
+# - Creates REST API endpoints for workers, shifts, and predictions
+# - Auto-generates interactive API documentation at /docs
+# - Type-hint validation and automatic request parsing
+# - Async support for handling multiple concurrent requests
+
 uvicorn[standard]==0.32.1
+# Uvicorn: ASGI (Asynchronous Server Gateway Interface) web server
+# - Runs the FastAPI application in production/development
+# - Handles HTTP requests and responses efficiently
+# - [standard] extras include WebSocket support and other features
+# - Usage: uvicorn src.main:app --reload
 
-# Database and ORM
+# ==============================================================================
+# DATABASE - PostgreSQL connection and data mapping
+# ==============================================================================
+
 sqlalchemy==2.0.36
+# SQLAlchemy: Object-Relational Mapper (ORM) for database operations
+# - Maps Python classes (models) to database tables automatically
+# - Handles complex queries without writing raw SQL
+# - Type checking and validation through Python classes
+# - Supports relationships between tables (workers ↔ shifts)
+
 pg8000==1.31.2
+# pg8000: Pure Python PostgreSQL adapter/driver
+# - Connects Python application to PostgreSQL database
+# - No external C dependencies (fully Python implementation)
+# - Used by SQLAlchemy to send queries to PostgreSQL
+
 alembic==1.11.1
+# Alembic: Database migration tool for version control
+# - Tracks schema changes over time with migration scripts
+# - Supports rollback to previous database versions
+# - Enables team collaboration on database modifications
 
-# Configuration and validation
+# ==============================================================================
+# CONFIGURATION AND VALIDATION
+# ==============================================================================
+
 python-dotenv==1.0.1
+# Python-dotenv: Loads environment variables from .env file
+# - Stores sensitive data (database password, API keys) outside code
+# - Enables different configurations for dev/test/production
+# - Prevents accidentally committing secrets to version control
+
 pydantic-settings==2.12.0
+# Pydantic Settings: Configuration management with validation
+# - Validates environment variables on application startup
+# - Type checking for configuration values
+# - Provides defaults and supports environment overrides
+
 email-validator==2.3.0
+# email-validator: Validates email address formats
+# - Ensures valid email format in worker registration
+# - Pydantic integration for schema validation
+# - RFC 5321/5322 compliant email validation
 
-# Authentication
+# ==============================================================================
+# AUTHENTICATION & SECURITY (Future use)
+# ==============================================================================
+
 python-jose[cryptography]==3.3.0
+# Python-JOSE: JWT (JSON Web Token) library for secure authentication
+# - Creates and validates tokens for user login/logout
+# - Generates cryptographic signatures for token verification
+# - Enables stateless user authentication (no session storage needed)
+
 passlib[bcrypt]==1.7.4
+# Passlib: Password hashing and verification library
+# - Hashes passwords using bcrypt algorithm (secure and slow by design)
+# - Verifies passwords during login without storing plaintext
+# - [bcrypt] specifies the hashing algorithm backend
 
-# Testing and logging
+# ==============================================================================
+# TESTING FRAMEWORK
+# ==============================================================================
+
 pytest==8.3.4
-httpx==0.27.2
-python-json-logger==3.2.1
+# Pytest: Testing framework for automated test execution
+# - Discovers and runs tests in tests/ directory
+# - Provides fixtures for reusable test setup
+# - Generates test reports and coverage analysis
 
-# Optional ML packages (commented out for now)
+httpx==0.27.2
+# HTTPX: HTTP client library (async and sync support)
+# - Makes HTTP requests within tests (calls API endpoints)
+# - Tests API endpoints without running external browser
+# - Async support matches FastAPI's async capabilities
+
+python-json-logger==3.2.1
+# Python-JSON-Logger: Structured logging in JSON format
+# - Logs application events in JSON for better analysis
+# - Enables log aggregation in production monitoring tools
+# - Better visibility into application behavior and debugging
+
+# ==============================================================================
+# OPTIONAL ML PACKAGES (Commented out - enable when needed)
+# ==============================================================================
+
 # pandas==2.1.4
+# Pandas: Data manipulation library for tabular data
+# - Load and process CSV/Excel files with gig worker data
+# - Group earnings by time period, location, demand level
+# - Prepare training data for ML models
+
 # numpy==1.26.2
+# NumPy: Numerical computing library (array operations)
+# - Fast mathematical operations on large datasets
+# - Required dependency for pandas and scikit-learn
+# - Enables efficient matrix calculations for ML
+
 # scikit-learn==1.3.2
+# Scikit-learn: Machine learning algorithms library
+# - Train predictive models (earnings prediction, demand forecasting)
+# - Linear regression, random forests, clustering algorithms
+# - Model evaluation and cross-validation tools
+
 # matplotlib==3.8.2
+# Matplotlib: Data visualization library (charts and graphs)
+# - Create earnings trend visualizations
+# - Plot demand heatmaps by location and time
+# - Display model performance metrics visually
