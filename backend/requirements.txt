@@ -106,27 +106,76 @@ python-json-logger==3.2.1
 # ==============================================================================
 # OPTIONAL ML PACKAGES (Commented out - enable when needed)
 # ==============================================================================
+# 
+# WHY THESE ARE OPTIONAL (Not used in initial implementation):
+# 
+# The Smart Shift Planner implements ML predictions using PURE PYTHON (no external deps).
+# This approach was chosen for MVP (Minimum Viable Product) because:
+#
+# BENEFITS OF PURE PYTHON APPROACH:
+# - Lightweight: Smaller deployment size, faster installation
+# - No heavy dependencies: Easier to deploy to production/cloud
+# - Simpler debugging: Direct control over algorithm logic
+# - Educational: Clear insight into how predictions work
+# - Scalable: Can add pandas/numpy later without refactoring
+#
+# DRAWBACKS OF PURE PYTHON:
+# - Slower for large datasets (100k+ rows)
+# - More manual data processing code
+# - Limited statistical functions
+# - Not optimized for matrix operations
+#
+# WHEN TO ADD THESE LIBRARIES:
+# 1. Dataset grows beyond 10,000+ historical shifts
+# 2. Need complex statistical models (clustering, neural networks)
+# 3. Performance becomes critical (sub-second predictions needed)
+# 4. Want advanced features (cross-validation, ensemble methods)
+#
+# CURRENT IMPLEMENTATION (src/ml/predictors.py):
+# - EarningsPredictor: Statistical model using basic math (mean, weighted averages)
+# - DemandForecaster: Pattern matching with Python dictionaries
+# - ShiftOptimizer: Heuristic-based recommendations
+# All use only Python standard library (no external ML deps)
+# ============================================================================
 
 # pandas==2.1.4
 # Pandas: Data manipulation library for tabular data
-# - Load and process CSV/Excel files with gig worker data
-# - Group earnings by time period, location, demand level
-# - Prepare training data for ML models
+# USE CASE: When dataset grows large or data loading becomes bottleneck
+# - Load and process CSV/Excel files with gig worker data (millions of rows)
+# - Group earnings by time period, location, demand level efficiently  
+# - Prepare training data for ML models with built-in aggregation
+# - Handle missing values and data cleaning
+# ALTERNATIVE (current): Manual loops with Python dictionaries
+# WHEN TO ADD: Project scales to 10k+ historical shift records
 
 # numpy==1.26.2
 # NumPy: Numerical computing library (array operations)
-# - Fast mathematical operations on large datasets
+# USE CASE: When calculations become computationally expensive
+# - Fast mathematical operations on large datasets (vectorized)
 # - Required dependency for pandas and scikit-learn
-# - Enables efficient matrix calculations for ML
+# - Enables efficient matrix calculations for ML (100x faster than loops)
+# - Memory-efficient storage for numerical arrays
+# ALTERNATIVE (current): Python lists and basic math operations
+# WHEN TO ADD: Need to process 100k+ data points per prediction
 
 # scikit-learn==1.3.2
 # Scikit-learn: Machine learning algorithms library
+# USE CASE: When need advanced ML models beyond heuristics
 # - Train predictive models (earnings prediction, demand forecasting)
 # - Linear regression, random forests, clustering algorithms
 # - Model evaluation and cross-validation tools
+# - Hyperparameter tuning and model comparison
+# ALTERNATIVE (current): Custom statistical models in pure Python
+# WHEN TO ADD: Need accuracy >90%, or complex pattern recognition
+# FUTURE: Could replace EarningsPredictor with RandomForestRegressor
 
 # matplotlib==3.8.2
 # Matplotlib: Data visualization library (charts and graphs)
-# - Create earnings trend visualizations
+# USE CASE: Creating dashboards and performance reports
+# - Create earnings trend visualizations for workers
 # - Plot demand heatmaps by location and time
 # - Display model performance metrics visually
+# - Generate performance reports for stakeholders
+# ALTERNATIVE (current): Text-based reports or external dashboards
+# WHEN TO ADD: Need frontend visualizations or reporting dashboards
+# NOTE: Could integrate with Plotly for interactive web visualizations
