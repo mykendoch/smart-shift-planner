@@ -1,0 +1,114 @@
+# ==============================================================================
+# Python Package Requirements
+
+# ------------------------------------------------------------------------------
+# WEB FRAMEWORK - Core packages to build the API
+# ------------------------------------------------------------------------------
+
+fastapi==0.115.0
+# FastAPI: Modern web framework for building APIs
+# 1. Creates REST API endpoints.
+# 2. Auto-generates interactive documentation at /docs
+# 3. Fast, easy to use, based on Python type hints
+
+uvicorn[standard]==0.32.1
+# Uvicorn: ASGI web server Runs our FastAPI application
+# 2. Handles HTTP requests and responses
+# 3. The [standard] part includes extra features like WebSocket support
+
+# Usage: uvicorn src.main:app --reload
+
+# ------------------------------------------------------------------------------
+# DATABASE - PostgreSQL
+# ------------------------------------------------------------------------------
+
+sqlalchemy==2.0.36
+# SQLAlchemy: Object-Relational Mapper (ORM)
+
+
+
+pg8000==1.31.2
+# pg8000: Pure Python PostgreSQL adapter
+# - Connects Python to PostgreSQL database
+
+
+python-dotenv==1.0.1
+# Python-dotenv: Environment variable loader
+# - Reads .env file (where we store secrets like database passwords)
+# - Keeps sensitive data out of our code
+
+
+# ------------------------------------------------------------------------------
+# AUTHENTICATION & SECURITY - User login and password protection
+# ------------------------------------------------------------------------------
+
+python-jose[cryptography]==3.3.0
+# Python-JOSE: JSON Web Token (JWT) library for Secure, stateless user authentication
+# - Creates and validates JWT tokens for user authentication
+# - When user logs in, we give them a token
+# - They send token with each request to prove identity
+ 
+
+
+passlib[bcrypt]==1.7.4
+# Passlib: Password hashing library
+# The [bcrypt] part specifies the hashing algorithm to use
+
+# ------------------------------------------------------------------------------
+# TESTING 
+# ------------------------------------------------------------------------------
+
+pytest==8.3.4
+# Pytest: Testing framework
+# - Write automated tests to verify code works correctly
+
+
+httpx==0.27.2
+# HTTPX: HTTP client library
+# - Makes HTTP requests in tests (like calling our API endpoints) such that Test API endpoints without running a browser
+ 
+
+# ------------------------------------------------------------------------------
+# LOGGING 
+# ------------------------------------------------------------------------------
+
+python-json-logger==3.2.1
+# Python-JSON-Logger: Structured logging for Better visibility into what the app is doing
+
+# ALEMBIC - database migrations
+alembic==1.11.1
+
+# Pydantic settings for configuration models
+pydantic-settings==2.12.0
+email-validator==2.3.0
+
+# ==============================================================================
+#  ML PACKAGES )
+# ==============================================================================
+
+# pandas==2.1.4
+# Pandas: Data manipulation library
+# - Work with tables of data (like Excel but in Python)
+
+# numpy==1.26.2
+# NumPy: Numerical computing library
+# - Fast mathematical operations on arrays
+# - Required by pandas and scikit-learn
+
+# scikit-learn==1.3.2
+# Scikit-learn: Machine learning library
+# - Pre-built ML algorithms (Random Forest, Linear Regression, etc.)
+# - Train models to predict earnings, demand patterns
+
+# matplotlib==3.8.2
+# Matplotlib: Data visualization library
+# - Create charts and graphs
+# - Visualize earnings trends, demand heatmaps
+
+
+#
+# 3. Install all packages:
+#    pip install -r requirements.txt
+#
+# 4. Verify installation:
+#    pip list
