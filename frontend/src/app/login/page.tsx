@@ -3,102 +3,208 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { Toaster } from 'react-hot-toast';
+import { Eye, EyeOff, AlertCircle, LogIn } from 'lucide-react';
 import { useAuthStore } from '@/lib/store';
+import { showToast } from '@/lib/notify';
+import './login.css';
+
+// Logger utility for debugging
+const logger = {
+  debug: (msg: string, data?: any) => console.log(`[DEBUG] ${msg}`, data || ''),
+  info: (msg: string, data?: any) => console.log(`[INFO] ${msg}`, data || ''),
+  error: (msg: string, data?: any) => console.error(`[ERROR] ${msg}`, data || ''),
+};
 
 export default function LoginPage() {
   const router = useRouter();
   const { login, isLoading, error } = useAuthStore();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [localError, setLocalError] = useState('');
+  const [isAdminMode, setIsAdminMode] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLocalError('');
+    logger.info('Login attempt started', { email, isAdminMode });
 
     if (!email || !password) {
-      setLocalError('Please fill in all fields');
+      const msg = 'Email and password are required';
+      setLocalError(msg);
+      showToast.error(msg);
+      logger.error(msg);
       return;
     }
 
     try {
-      await login(email, password);
-      router.push('/dashboard');
+      logger.debug('Calling authentication service', { endpoint: '/auth/login' });
+      
+      const response = await login(email, password);
+      logger.info('Login successful', { email });
+      
+      showToast.success('Welcome back!');
+      
+      // Determine redirect based on role or mode
+      const token = localStorage.getItem('token');
+      logger.debug('Token stored in localStorage', { hasToken: !!token });
+      
+      const redirectPath = '/dashboard';
+      logger.info('Redirecting to dashboard', { path: redirectPath });
+      
+      setTimeout(() => {
+        router.push(redirectPath);
+      }, 800);
     } catch (error: any) {
-      setLocalError(error.response?.data?.detail || 'Login failed');
+      const errorMsg = error.response?.data?.detail || 'Invalid email or password';
+      setLocalError(errorMsg);
+      showToast.error(errorMsg);
+      logger.error('Login failed', { email, error: errorMsg, status: error.response?.status });
     }
   };
 
+  const handleForgotPassword = (e: React.MouseEvent) => {
+    e.preventDefault();
+    logger.info('Navigating to password reset');
+    router.push('/forgot-password');
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 to-green-500">
-      <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
-        <h1 className="text-3xl font-bold text-center mb-2 text-gray-800">
-          Smart Shift Planner
-        </h1>
-        <p className="text-center text-gray-600 mb-8">Login to your dashboard</p>
-
-        {(error || localError) && (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-4">
-            {error || localError}
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">
-              Email Address
-            </label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="input-field"
-              placeholder="you@example.com"
-              disabled={isLoading}
-            />
+    <>
+      <Toaster />
+      <div className="auth-container">
+        <div className="auth-card">
+          {/* Header */}
+          <div className="auth-header">
+            <h1>Welcome Back</h1>
+            <p>Login to {isAdminMode ? 'Admin' : 'Smart Shift Planner'}</p>
           </div>
 
-          <div>
-            <label className="block text-gray-700 font-medium mb-2">
-              Password
-            </label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="input-field"
-              placeholder="••••••••"
-              disabled={isLoading}
-            />
+          {/* Error Alert */}
+          {(error || localError) && (
+            <div className="alert alert-error">
+              <AlertCircle size={16} className="alert-icon" />
+              <span>{error || localError}</span>
+            </div>
+          )}
+
+          {/* Form */}
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label htmlFor="email">Email Address</label>
+              <input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                required
+                autoFocus
+                disabled={isLoading}
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <div className="password-input-wrapper">
+                <input
+                  id="password"
+                  type={showPassword ? 'text' : 'password'}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter your password"
+                  required
+                  disabled={isLoading}
+                />
+                <button
+                  type="button"
+                  className="password-toggle"
+                  onClick={() => setShowPassword(!showPassword)}
+                  tabIndex={-1}
+                  disabled={isLoading}
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
+            </div>
+
+            {/* Form Options */}
+            <div className="form-options">
+              <label className="remember-me">
+                <input type="checkbox" disabled={isLoading} />
+                Remember me
+              </label>
+              <button 
+                type="button" 
+                className="forgot-password"
+                onClick={handleForgotPassword}
+                disabled={isLoading}
+              >
+                Forgot Password?
+              </button>
+            </div>
+
+            {/* Submit Button */}
+            <button type="submit" className="btn-submit" disabled={isLoading}>
+              <LogIn size={16} style={{ marginRight: '8px' }} />
+              {isLoading ? 'Logging in...' : 'Login'}
+            </button>
+          </form>
+
+          {/* Divider */}
+          <div className="divider">
+            <span>or</span>
           </div>
 
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-full btn-primary disabled:opacity-50"
-          >
-            {isLoading ? 'Signing in...' : 'Sign In'}
-          </button>
-        </form>
+          {/* Admin/User Toggle */}
+          <div className="auth-toggle">
+            {!isAdminMode ? (
+              <p className="auth-toggle-text">
+                Are you staff?{' '}
+                <button 
+                  type="button" 
+                  className="toggle-link"
+                  onClick={() => {
+                    setIsAdminMode(true);
+                    setEmail('');
+                    setPassword('');
+                    setLocalError('');
+                    logger.info('Switched to admin mode');
+                  }}
+                >
+                  Login as Admin
+                </button>
+              </p>
+            ) : (
+              <p className="auth-toggle-text">
+                Driver account?{' '}
+                <button 
+                  type="button" 
+                  className="toggle-link"
+                  onClick={() => {
+                    setIsAdminMode(false);
+                    setEmail('');
+                    setPassword('');
+                    setLocalError('');
+                    logger.info('Switched to driver mode');
+                  }}
+                >
+                  Login as Driver
+                </button>
+              </p>
+            )}
+          </div>
 
-        <p className="text-center text-gray-600 mt-6">
-          Don't have an account?{' '}
-          <Link href="/register" className="text-blue-600 hover:underline">
-            Sign up
-          </Link>
-        </p>
-
-        {/* Demo credentials */}
-        <div className="mt-8 p-4 bg-blue-50 rounded border border-blue-200 text-sm">
-          <p className="font-semibold text-gray-700 mb-2">Demo Accounts:</p>
-          <p className="text-gray-600">
-            <strong>Driver:</strong> driver@example.com / password123
-          </p>
-          <p className="text-gray-600">
-            <strong>Admin:</strong> admin@example.com / password123
-          </p>
+          {/* Footer */}
+          <div className="auth-footer">
+            Don't have an account?{' '}
+            <Link href="/register" className="link-primary">
+              Create Account
+            </Link>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

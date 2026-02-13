@@ -1,0 +1,234 @@
+/* Accuracy Page Styles */
+
+.accuracy-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* Metrics Grid */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.metric-box {
+  background: #fff;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.metric-box:hover {
+  border-color: #ff5722;
+  box-shadow: 0 4px 12px rgba(255, 87, 34, 0.1);
+}
+
+.metric-label {
+  font-size: 12px;
+  color: #999;
+  font-weight: 500;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.metric-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.metric-target {
+  font-size: 11px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.metric-status {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.metric-status.excellent {
+  background: rgba(76, 175, 80, 0.1);
+  color: #4caf50;
+}
+
+.metric-status.good {
+  background: rgba(33, 150, 243, 0.1);
+  color: #2196f3;
+}
+
+.metric-status.acceptable {
+  background: rgba(255, 152, 0, 0.1);
+  color: #ff9800;
+}
+
+.metric-status.poor {
+  background: rgba(244, 67, 54, 0.1);
+  color: #f44336;
+}
+
+/* Charts */
+.chart-container {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.chart-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 16px;
+}
+
+/* Accuracy Level Card */
+.accuracy-level {
+  background: #fff;
+  border: 2px solid #4caf50;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.accuracy-level.excellent {
+  border-color: #4caf50;
+  background: #f1f8e9;
+}
+
+.accuracy-level.good {
+  border-color: #2196f3;
+  background: #e3f2fd;
+}
+
+.accuracy-level.acceptable {
+  border-color: #ff9800;
+  background: #fff3e0;
+}
+
+.accuracy-level.poor {
+  border-color: #f44336;
+  background: #ffebee;
+}
+
+.accuracy-level-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.accuracy-level.excellent .accuracy-level-title { color: #4caf50; }
+.accuracy-level.good .accuracy-level-title { color: #2196f3; }
+.accuracy-level.acceptable .accuracy-level-title { color: #ff9800; }
+.accuracy-level.poor .accuracy-level-title { color: #f44336; }
+
+.accuracy-level-description {
+  color: #666;
+  font-size: 14px;
+}
+
+/* Location Accuracy Table */
+.location-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.location-table thead {
+  background: #f5f5f5;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.location-table th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  font-size: 13px;
+}
+
+.location-table td {
+  padding: 12px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.location-table tr:hover {
+  background: #f9f9f9;
+}
+
+/* Time Period Selector */
+.time-period-selector {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.time-period-btn {
+  padding: 8px 16px;
+  border: 2px solid #e0e0e0;
+  background: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  transition: all 0.3s ease;
+}
+
+.time-period-btn:hover {
+  border-color: #ff5722;
+  color: #ff5722;
+}
+
+.time-period-btn.active {
+  background: #ff5722;
+  border-color: #ff5722;
+  color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .accuracy-container {
+    padding: 16px;
+  }
+
+  .metrics-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .metric-value {
+    font-size: 24px;
+  }
+
+  .accuracy-level-title {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  .accuracy-container {
+    padding: 12px;
+  }
+
+  .chart-container {
+    padding: 16px;
+    overflow-x: auto;
+  }
+
+  .time-period-selector {
+    flex-wrap: wrap;
+  }
+}

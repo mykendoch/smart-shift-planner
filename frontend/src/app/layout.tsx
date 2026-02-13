@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuthStore } from '@/lib/store';
+import './dashboard/styles/dashboard.css';
 
 export default function RootLayout({
   children,

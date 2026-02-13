@@ -1,6 +1,7 @@
 'use client';
 
 import { useAuthStore } from '@/lib/store';
+import './survey-admin.css';
 
 export default function AdminSurveysPage() {
   const { user } = useAuthStore();

@@ -9,6 +9,8 @@ from .endpoints.volatility import router as volatility_router
 from .endpoints.accuracy import router as accuracy_router
 from .endpoints.surveys import router as surveys_router
 from .endpoints.eligibility import router as eligibility_router
+from .endpoints.guarantee import router as guarantee_router
+from .endpoints.admin import router as admin_router
 
 router = APIRouter()
 router.include_router(workers_router)
@@ -20,4 +22,6 @@ router.include_router(volatility_router)
 router.include_router(accuracy_router)
 router.include_router(surveys_router)
 router.include_router(eligibility_router)
+router.include_router(guarantee_router)
+router.include_router(admin_router)
 

@@ -3,7 +3,7 @@ User Authentication Model
 
 Represents system users (Drivers and Administrators) with role-based access.
 """
-from sqlalchemy import Column, Integer, String, DateTime, Boolean, Enum, func
+from sqlalchemy import Column, Integer, String, DateTime, Boolean, Enum, func, ForeignKey
 from sqlalchemy.orm import relationship
 from enum import Enum as PyEnum
 from datetime import datetime
@@ -54,9 +54,6 @@ class User(Base):
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
     
     # RELATIONSHIPS
-    # Drivers can have multiple shifts
-    shifts = relationship("Shift", back_populates="driver", foreign_keys="Shift.driver_id")
-    
     # Admins can create system settings
     admin_settings = relationship("AdminSettings", back_populates="admin")
     

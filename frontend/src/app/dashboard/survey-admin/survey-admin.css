@@ -1,0 +1,266 @@
+/* Survey Admin Page Styles */
+
+.survey-admin-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* Survey Metrics Grid */
+.survey-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.survey-metric-card {
+  background: #fff;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.survey-metric-card:hover {
+  border-color: #ff5722;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.rating-display {
+  font-size: 48px;
+  font-weight: 700;
+  color: #ff5722;
+  margin: 16px 0;
+}
+
+.rating-stars {
+  color: #ff9800;
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.metric-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.metric-description {
+  font-size: 12px;
+  color: #999;
+}
+
+/* Theme Cards */
+.themes-container {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.theme-card {
+  background: #fff;
+  border-left: 4px solid #ff5722;
+  border-radius: 8px;
+  padding: 24px;
+  transition: all 0.3s ease;
+}
+
+.theme-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.theme-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.theme-icon {
+  font-size: 28px;
+}
+
+.theme-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.theme-examples {
+  list-style: none;
+  padding: 0;
+}
+
+.theme-example {
+  padding: 8px 0;
+  padding-left: 28px;
+  position: relative;
+  color: #666;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.theme-example::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #ff5722;
+  font-weight: bold;
+}
+
+/* Trend Chart */
+.trend-chart {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.trend-chart-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 16px;
+}
+
+/* Key Findings */
+.key-findings {
+  background: #fff3e0;
+  border-left: 4px solid #ff9800;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.key-findings-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #e65100;
+  margin-bottom: 12px;
+}
+
+.finding-item {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+  padding-left: 24px;
+  position: relative;
+}
+
+.finding-item::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: #ff9800;
+  font-weight: bold;
+}
+
+/* Sentiment Distribution */
+.sentiment-distribution {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.sentiment-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.sentiment-row:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.sentiment-label {
+  min-width: 100px;
+  font-weight: 600;
+  color: #333;
+}
+
+.sentiment-bar {
+  flex: 1;
+  height: 24px;
+  background: #e0e0e0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.sentiment-fill {
+  height: 100%;
+  background: #ff5722;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 8px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.sentiment-percentage {
+  min-width: 40px;
+  text-align: right;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .survey-admin-container {
+    padding: 16px;
+  }
+
+  .survey-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .rating-display {
+    font-size: 36px;
+  }
+
+  .theme-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .survey-admin-container {
+    padding: 12px;
+  }
+
+  .survey-metrics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sentiment-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .sentiment-label {
+    width: 100%;
+  }
+
+  .sentiment-bar {
+    width: 100%;
+  }
+
+  .sentiment-percentage {
+    width: 100%;
+    text-align: right;
+  }
+}

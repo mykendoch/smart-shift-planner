@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useAuthStore } from '@/lib/store';
+import './workers.css';
 
 export default function WorkersPage() {
   const { user } = useAuthStore();

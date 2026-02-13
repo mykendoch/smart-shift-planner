@@ -1,6 +1,8 @@
+/* stylelint-disable */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* stylelint-enable */
 
 * {
   margin: 0;
@@ -31,11 +33,23 @@ code {
   }
 }
 
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .animate-spin {
   animation: spin 1s linear infinite;
 }
 
 /* Button styles */
+/* stylelint-disable-next-line */
 @layer components {
   .btn-primary {
     @apply px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition;
@@ -69,3 +83,4 @@ code {
     @apply text-green-600 text-sm mt-1;
   }
 }
+/* stylelint-enable */

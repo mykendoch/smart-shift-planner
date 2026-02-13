@@ -3,6 +3,7 @@
 import { useAuthStore } from '@/lib/store';
 import { useAccuracy } from '@/lib/hooks';
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import './accuracy.css';
 
 export default function AccuracyPage() {
   const { user } = useAuthStore();
