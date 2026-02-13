@@ -9,23 +9,13 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime
 import logging
-from pathlib import Path
 
 from src.core.config import settings
+from src.core.logging_config import setup_logging
 from src.api.v1 import router as api_router
 
-# Ensure logs directory exists
-Path("logs").mkdir(exist_ok=True)
-
-# Configure logging
-logging.basicConfig(
-    level=getattr(logging, settings.LOG_LEVEL),
-    format='%(asctime)s | %(levelname)-8s | %(name)s | %(message)s',
-    handlers=[
-        logging.FileHandler('logs/app.log'),
-        logging.StreamHandler()
-    ]
-)
+# Initialize logging system with separated logs
+setup_logging()
 
 logger = logging.getLogger(__name__)
 
